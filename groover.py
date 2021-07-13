@@ -6,11 +6,15 @@ import shutil
 pa = os.getcwd()
 
 def init(chal):
+    ## Create Challenge Input Folder
     subprocess.call(f'mkdir {chal}Input')
+    ## Create Challenge File
     subprocess.call(f'touch {chal}.py')
 
-def case():
-    pass
+def case(chal):
+    ## Create Text file for tesk case in the challenge input folder
+    digit = len(os.listdir(f'{pa}\{chal}Input'))
+    subprocess.call(f'touch {chal}Input/input{str(digit).rjust(3, "0")}.txt')
 
 def testChal(chal):
     
@@ -70,11 +74,14 @@ if __name__ == "__main__":
         #print(f"Command:     {command}")
         if command == "--init" or command == "-i":
             init(chalName)
+
         elif command == '--case' or command == "-c":
-            pass
+            case(chalName)
+
         elif command == '--test' or command == "-t":
             clear_results()
             testChal(chalName)
+
         elif command == '--submitted' or command == "-s":
             clear_results()
             submitted(chalName)
