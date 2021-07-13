@@ -18,6 +18,7 @@ def testChal(chal):
         subprocess.call(f"python {chal}.py", stdin=caseStream)
         caseStream.close()
 
+    
         ## Print Output
         showResults(testCase)
         
