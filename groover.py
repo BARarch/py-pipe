@@ -8,8 +8,11 @@ def init():
 def case():
     pass
 
-def testChal():
-    pass
+def testChal(chal, cmd):
+    caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
+    #caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
+    subprocess.call("python restaurantMath.py", stdin="caseStream", shell=True)
+    #subprocess.call("python restaurantMath.py")
 
 if __name__ == "__main__":
     ## Get Challenge File and Command
@@ -22,7 +25,6 @@ if __name__ == "__main__":
         --submitted     closes challenge and removes cases
 
     '''
-
     if len(sys.argv) == 3:
         g, chalName, command = sys.argv
         print(f"Challenge:   {chalName}")
@@ -33,7 +35,7 @@ if __name__ == "__main__":
             pass
 
         elif command == '--test' or command == "-t":
-            pass
+            testChal(chalName, command)
         else:
             print(f"--Unrecognisable Command: {command}--")
     else:
