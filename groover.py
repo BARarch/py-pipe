@@ -8,14 +8,32 @@ def init():
 def case():
     pass
 
-def testChal(chal, cmd):
-    caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
-    #caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
-    #subprocess.call("python restaurantMath.py", stdin="caseStream", shell=True)
-    subprocess.call("python restaurantMath.py", stdin=caseStream)
+def testChal(chal):
+    testCases = ['input000', 'input006', 'input001']
 
-    ## Print Output
-    subprocess.call("cat grooverOutput.txt")
+    for testCase in testCases:
+        caseStream = open(f'{os.getcwd()}\{chal}Input\{testCase}.txt')
+        #caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
+        #subprocess.call("python restaurantMath.py", stdin="caseStream", shell=True)
+        subprocess.call(f"python {chal}.py", stdin=caseStream)
+        caseStream.close()
+
+        ## Print Output
+        showResults(testCase)
+        
+
+    return
+
+def showResults(testCase):
+    print(f'--Results for: {testCase}--')
+    subprocess.call(f"cat {os.environ['OUTPUT_PATH']}")
+    print()
+
+def clearResults():
+    resultsBuffer = open(os.environ['OUTPUT_PATH'], 'w')
+    resultsBuffer.close()
+
+
 
 if __name__ == "__main__":
     ## Get Challenge File and Command
@@ -30,15 +48,16 @@ if __name__ == "__main__":
     '''
     if len(sys.argv) == 3:
         g, chalName, command = sys.argv
-        print(f"Challenge:   {chalName}")
-        print(f"Command:     {command}")
+        #print(f"Challenge:   {chalName}")
+        #print(f"Command:     {command}")
         if command == "--init" or command == "-i":
             pass
         elif command == '--case' or command == "-c":
             pass
 
         elif command == '--test' or command == "-t":
-            testChal(chalName, command)
+            clearResults()
+            testChal(chalName)
         else:
             print(f"--Unrecognisable Command: {command}--")
     else:

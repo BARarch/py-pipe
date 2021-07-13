@@ -3,8 +3,11 @@ import os
 import random
 import re
 import sys
+import qtimer
 
+@qtimer.timeit
 def restaurant(l, b):
+    print(f'l = (l), b = {b}')
     if l > b:
         larger, smaller = l, b
     else:
