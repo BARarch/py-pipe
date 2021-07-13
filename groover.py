@@ -11,8 +11,11 @@ def case():
 def testChal(chal, cmd):
     caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
     #caseStream = open(f'{os.getcwd()}\{chal}Input\input000.txt')
-    subprocess.call("python restaurantMath.py", stdin="caseStream", shell=True)
-    #subprocess.call("python restaurantMath.py")
+    #subprocess.call("python restaurantMath.py", stdin="caseStream", shell=True)
+    subprocess.call("python restaurantMath.py", stdin=caseStream)
+
+    ## Print Output
+    subprocess.call("cat grooverOutput.txt")
 
 if __name__ == "__main__":
     ## Get Challenge File and Command
