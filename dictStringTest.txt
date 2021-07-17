@@ -1,0 +1,14 @@
+l: 10
+r: 12
+p: ""
+s: "LOL"
+d: 
+{'ride': 4, 
+'listInside' : [4,
+3,
+2,
+1],
+'eighteen': 40}
+a: [4,
+12,
+'hello', 'world']

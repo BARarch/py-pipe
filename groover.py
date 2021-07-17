@@ -2,6 +2,9 @@ import sys
 import os
 import subprocess
 import shutil
+import cs_utils
+from datetime import datetime
+
 
 pa = os.getcwd()
 
@@ -11,10 +14,35 @@ def init(chal):
     ## Create Challenge File
     subprocess.call(f'touch {chal}.py')
 
+def initCsStub(chal):
+    date = datetime.now().strftime('%y%m%d')
+    init(chal)
+    subprocess.call(f'echo ...initializing codesignal stub for {chal}')
+    subprocess.call('echo Enter challenge function stub below:')
+    subprocess.call(f'echo #Date Started: {date} >> {chal}.py', shell=True)
+    subprocess.call(f'cat testEnvironmentHeader.py >> {chal}.py', shell=True)
+    subprocess.call(f'cat {chal}.py', shell=True)
+    subprocess.call(f'cat >> {chal}.py', shell=True)
+    subprocess.call(f'cat testEnvironmentFooter_CS.py >> {chal}.py', shell=True)
+
+def initHrStub(chal):
+    date = datetime.now().strftime('%y%m%d')
+    init(chal)
+    subprocess.call(f'echo ...initializing codesignal stub for {chal}')
+    subprocess.call('echo Enter code stub below:')
+    subprocess.call(f'echo #Date Started: {date} >> {chal}.py', shell=True)
+    subprocess.call(f'cat testEnvironmentHeader.py >> {chal}.py', shell=True)
+    subprocess.call(f'cat {chal}.py', shell=True)
+    subprocess.call(f'cat >> {chal}.py', shell=True)
+
 def case(chal):
     ## Create Text file for tesk case in the challenge input folder
     digit = len(os.listdir(f'{pa}\{chal}Input'))
-    subprocess.call(f'touch {chal}Input/input{str(digit).rjust(3, "0")}.txt')
+    caseName = f'{chal}Input/input{str(digit).rjust(3, "0")}'
+    subprocess.call(f'touch {caseName}.txt')
+    subprocess.call('echo Paste testcase text:')
+    subprocess.call(f'cat >> {caseName}.txt', shell=True)
+
 
 def testChal(chal):
     
@@ -68,13 +96,28 @@ if __name__ == "__main__":
         --submitted     closes challenge and removes cases
 
     '''
-    if len(sys.argv) == 3:
-        g, chalName, command = sys.argv
+    helpMode = False
+    comStr = tuple(sys.argv)
+    ## Helpmode Setup Code
+    if comStr[-1] == '-h' or comStr[-1] == '--help':
+        helpMode = True
+        ## Chop off the help command from the command string
+        ## Proceed with the helpmode flag up
+        comStr = comStr[:-1]
+
+    if len(comStr) >= 3:
+        g, chalName, command = comStr[:3]
+        #comStr = comStr[3:]
         #print(f"Challenge:   {chalName}")
         #print(f"Command:     {command}")
         if command == "--init" or command == "-i":
-            init(chalName)
-
+            comStr = comStr[3:]
+            if comStr and (comStr[0] == '--codesignal' or comStr[0] == '-cs'):
+                initCsStub(chalName)
+            elif comStr and (comStr[0] == '--hackerrank' or comStr[0] == '-hr'):
+                initHrStub(chalName)
+            else:
+                init(chalName)
         elif command == '--case' or command == "-c":
             case(chalName)
 
