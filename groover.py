@@ -77,11 +77,11 @@ def clear_results():
     resultsBuffer.close()
 
 def submitted(chal):
+    date = datetime.now().strftime('%y%m%d')
     ## Delete TestCase Folder
     shutil.rmtree(f'{pa}\{chal}Input')
     ## Move project file
-    shutil.move(f'{pa}\{chal}.py',f'..\{chal}.py')
-
+    shutil.move(f'{pa}\{chal}.py',f'..\{chal}{date}.py')
 
 
 
