@@ -82,6 +82,7 @@ def submitted(chal):
     shutil.rmtree(f'{pa}\{chal}Input')
     ## Move project file
     shutil.move(f'{pa}\{chal}.py',f'..\{chal}{date}.py')
+    subprocess.call(f'echo ...submitted to Hackerranks as {chal}{date}.py')
 
 
 
@@ -106,12 +107,12 @@ if __name__ == "__main__":
         comStr = comStr[:-1]
 
     if len(comStr) >= 3:
-        g, chalName, command = comStr[:3]
+        g, chalName, command, *comStr = comStr
         #comStr = comStr[3:]
         #print(f"Challenge:   {chalName}")
         #print(f"Command:     {command}")
         if command == "--init" or command == "-i":
-            comStr = comStr[3:]
+    
             if comStr and (comStr[0] == '--codesignal' or comStr[0] == '-cs'):
                 initCsStub(chalName)
             elif comStr and (comStr[0] == '--hackerrank' or comStr[0] == '-hr'):
