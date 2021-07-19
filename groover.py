@@ -14,7 +14,7 @@ def init(chal):
     ## Create Challenge File
     subprocess.call(f'touch {chal}.py')
 
-def initCsStub(chal):
+def initCsStub_Old(chal):
     date = datetime.now().strftime('%y%m%d')
     init(chal)
     subprocess.call(f'echo ...initializing codesignal stub for {chal}')
@@ -24,6 +24,31 @@ def initCsStub(chal):
     subprocess.call(f'cat {chal}.py', shell=True)
     subprocess.call(f'cat >> {chal}.py', shell=True)
     subprocess.call(f'cat testEnvironmentFooter_CS.py >> {chal}.py', shell=True)
+
+def initCsStub(chal):
+    date = datetime.now().strftime('%y%m%d')
+    init(chal)
+    subprocess.call(f'echo ...initializing codesignal stub for {chal}')
+    subprocess.call('echo Enter challenge function stub below:')
+    subprocess.call(f'echo #Date Started: {date} >> {chal}.py', shell=True)
+    subprocess.call(f'cat testEnvironmentHeader.py >> {chal}.py', shell=True)
+    subprocess.call(f'cat {chal}.py', shell=True)
+    subprocess.call(f'cat >> {chal}.txt', shell=True)
+    subprocess.call(f'cat {chal}.txt >> {chal}.py', shell=True)
+    subprocess.call(f'cat testEnvironmentFooter_CS_A.py >> {chal}.py', shell=True)
+    
+    ## This is the result = functionCall line
+    ## We preload this to call the challenge function
+    fd = open(f'{chal}.txt')
+    sys.stdin = fd
+    defCall, *functionCalltxt = input().strip().split(" ")
+    functionCall = " ".join(functionCalltxt) 
+    resultAssignment = f'    result = {functionCall[:-1]}' # NOTE: 4 spaces instead of tab character here
+    subprocess.call(f'echo {resultAssignment} >> {chal}.py', shell=True)
+    fd.close()
+    
+    subprocess.call(f'cat testEnvironmentFooter_CS_B.py >> {chal}.py', shell=True)
+    subprocess.call(f'rm {chal}.txt')
 
 def initHrStub(chal):
     date = datetime.now().strftime('%y%m%d')
