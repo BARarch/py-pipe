@@ -1,5 +1,5 @@
     try:
-        fptr.write('\n'.join(map(str, iter(result))))
+        fptr.write(' '.join(map(str, iter(result))))
     
     except TypeError as te:
         fptr.write(str(result))
