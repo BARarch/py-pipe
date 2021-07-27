@@ -25,7 +25,7 @@ def initCsStub_Old(chal):
     subprocess.call(f'cat >> {chal}.py', shell=True)
     subprocess.call(f'cat testEnvironmentFooter_CS.py >> {chal}.py', shell=True)
 
-def initCsStub(chal):
+def initCsStub(chal, challengePrefix=False):
     date = datetime.now().strftime('%y%m%d')
     init(chal)
     subprocess.call(f'echo ...initializing codesignal stub for {chal}')
@@ -33,6 +33,13 @@ def initCsStub(chal):
     subprocess.call(f'echo #Date Started: {date} >> {chal}.py', shell=True)
     subprocess.call(f'cat testEnvironmentHeader.py >> {chal}.py', shell=True)
     subprocess.call(f'cat {chal}.py', shell=True)
+    if challengePrefix:
+        subprocess.call('echo ')
+        subprocess.call('echo Enter prefix code:')
+        subprocess.call(f'cat >> {chal}.py', shell=True)
+        subprocess.call('echo ')
+        subprocess.call('echo Enter challenge function:')
+        subprocess.call(f'cat spacefile.txt >> {chal}.py', shell=True)
     subprocess.call(f'cat >> {chal}.txt', shell=True)
     subprocess.call(f'cat {chal}.txt >> {chal}.py', shell=True)
     subprocess.call(f'cat testEnvironmentFooter_CS_A.py >> {chal}.py', shell=True)
@@ -139,7 +146,10 @@ if __name__ == "__main__":
         if command == "--init" or command == "-i":
     
             if comStr and (comStr[0] == '--codesignal' or comStr[0] == '-cs'):
-                initCsStub(chalName)
+                if comStr[1:] and (comStr[1 == '--prefix'] or comStr[1] == '-p'):
+                    initCsStub(chalName, challengePrefix=True)
+                else:
+                    initCsStub(chalName)
             elif comStr and (comStr[0] == '--hackerrank' or comStr[0] == '-hr'):
                 initHrStub(chalName)
             else:
