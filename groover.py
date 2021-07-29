@@ -30,16 +30,22 @@ def initCsStub(chal, challengePrefix=False):
     init(chal)
     subprocess.call(f'echo ...initializing codesignal stub for {chal}')
     subprocess.call('echo Enter challenge function stub below:')
+
+    ## Header Section
     subprocess.call(f'echo #Date Started: {date} >> {chal}.py', shell=True)
-    subprocess.call(f'cat testEnvironmentHeader.py >> {chal}.py', shell=True)
-    subprocess.call(f'cat {chal}.py', shell=True)
     if challengePrefix:
-        subprocess.call('echo ')
+        subprocess.call(f'cat testEnvironmentHeader_CS_A.py >> {chal}.py', shell=True)
+        subprocess.call(f'cat {chal}.py', shell=True)
+    else:
+        subprocess.call(f'cat testEnvironmentHeader.py >> {chal}.py', shell=True)
+        subprocess.call(f'cat {chal}.py', shell=True)
+
+    ## Challenge Code Section    
+    if challengePrefix:
         subprocess.call('echo Enter prefix code:')
         subprocess.call(f'cat >> {chal}.py', shell=True)
-        subprocess.call('echo ')
-        subprocess.call('echo Enter challenge function:')
-        subprocess.call(f'cat spacefile.txt >> {chal}.py', shell=True)
+        subprocess.call('cat testEnvironmentHeader_CS_B.py', shell=True)
+        subprocess.call(f'cat testEnvironmentHeader_CS_B.py >> {chal}.py', shell=True)
     subprocess.call(f'cat >> {chal}.txt', shell=True)
     subprocess.call(f'cat {chal}.txt >> {chal}.py', shell=True)
     subprocess.call(f'cat testEnvironmentFooter_CS_A.py >> {chal}.py', shell=True)
