@@ -1,5 +1,5 @@
 # Quivers Technologies Py-Pipe
-This is a tester for computer science problems on the Hackerrank platform.  This script allows users to download problems and testcases offine from anywhere, for expedited testing and unlimted attempts.  This is also a tool to be used during competition [no worries it is legal and not considered cheating in most cases]. We are rerouting standard inputs to create bash shell processes that handle solution code and testcases locally.  
+This is a tester for computer science problems on the Hackerrank platform.  This script allows users to download problems and testcases offine from anywhere, for expedited testing and unlimted attempts.  This is also a tool to be used during competition [no worries it is legal and not considered cheating in most cases]. We are rerouting standard inputs to create a virtual bash shell, from python subprocesses, that handle solution code and testcases locally.  
 
 ## Rerouting input using bash
 Set up a test repo for bash code. Find a bash command that rerouts input from the keyboard to the file testcase0.txt. Show the output using echo or cat.
